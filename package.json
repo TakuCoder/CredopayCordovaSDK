@@ -1,0 +1,19 @@
+{
+  "name": "CredopaySDK",
+  "version": "3.5.0",
+  "description": "This plugin allows to add to add Credopay Payments to your application using Credopay Mobile SDK Native library",
+  "cordova": {
+    "id": "com.credopay.cordova.mobilesdk",
+    "platforms": [
+      "android"
+    ]
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Credopay",
+  "license": "BSD License, see LICENSE for details"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2014 PayPal. All rights reserved. -->
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.credopay.cordova.mobilesdk"
+    version="3.5.0">
+    <name>CredopaySDK</name>
+    <description>This plugin allows to add to add CredopaySDK Payments to your application using CredopaySDK Mobile SDK Native library</description>
+    <keywords>credopay, sdk, payments</keywords>
+    <license>BSD License, see LICENSE.md for details</license>
+    <engines>
+            <engine name="cordova" version="&gt;=3.0.0" />
+    </engines>
+
+    <js-module src="www/plugin.js" name="PayPalMobile">
+        <clobbers target="PayPalMobile" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="PayPalMobile">
+                <param name="android-package" value="in.credopay.payment.app.PayPalMobileCordovaPlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/PayPalMobileCordovaPlugin.java" target-dir="src/com/credopay/cordova/sdk" />
+
+    </platform>
+
+</plugin>

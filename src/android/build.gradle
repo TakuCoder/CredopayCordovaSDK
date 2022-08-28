@@ -1,0 +1,13 @@
+repositories {
+maven {
+credentials {
+username 'myMavenRepo'
+password 'CredoPaySDK'
+}
+url "https://mymavenrepo.com/repo/nkkgWioPTZZyJhyjF9hy/"
+}
+}
+
+dependencies {
+implementation 'in.credopay.payment.sdk:vm30-payment-sdk:1.1.4'
+}
