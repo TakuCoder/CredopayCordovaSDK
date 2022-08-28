@@ -4,20 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.core.content.ContextCompat;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Random;
-
-import in.credopay.payment.sdk.CLog;
-import in.credopay.payment.sdk.CredopayPaymentConstants;
-import in.credopay.payment.sdk.PaymentActivity;
-import in.credopay.payment.sdk.Utils;
-
 public class PayPalMobileCordovaPlugin extends CordovaPlugin {
     private CallbackContext callbackContext;
     private Activity activity = null;

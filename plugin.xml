@@ -19,11 +19,11 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="PayPalMobile">
-                <param name="android-package" value="in.credopay.payment.app.PayPalMobileCordovaPlugin" />
+                <param name="android-package" value="com.credopay.cordova.mobilesdk.PayPalMobileCordovaPlugin" />
             </feature>
         </config-file>
 
-        <source-file src="src/android/PayPalMobileCordovaPlugin.java" target-dir="src/com/credopay/cordova/sdk" />
+        <source-file src="src/android/PayPalMobileCordovaPlugin.java" target-dir="src/com/credopay/cordova/mobilesdk" />
 
     </platform>
 
