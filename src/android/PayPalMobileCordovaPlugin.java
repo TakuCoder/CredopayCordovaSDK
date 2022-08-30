@@ -1,30 +1,31 @@
-package in.credopay.payment.app;
+package com.credopay.cordova.mobilesdk;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.core.content.ContextCompat;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.Random;
+
+import in.credopay.payment.sdk.CredopayPaymentConstants;
+import in.credopay.payment.sdk.PaymentActivity;
+import in.credopay.payment.sdk.Utils;
+
 public class PayPalMobileCordovaPlugin extends CordovaPlugin {
     private CallbackContext callbackContext;
     private Activity activity = null;
-    private static final int REQUEST_SINGLE_PAYMENT = 1;
-    private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
-    private static final int REQUEST_CODE_PROFILE_SHARING = 3;
     private boolean serverStarted = false;
-    private String productionClientId;
-    private String sandboxClientId;
 
     @Override
     public boolean execute(String action, JSONArray args,
                            CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
-        //this.activity = this.cordova.getActivity();
-        // this.activity = this.activity.get;
+        this.activity = cordova.getActivity();
         boolean retValue = true;
 
         return retValue;
@@ -45,8 +46,6 @@ public class PayPalMobileCordovaPlugin extends CordovaPlugin {
 
     private void init(JSONArray args) throws JSONException {
         JSONObject jObject = args.getJSONObject(0);
-        this.productionClientId = jObject.getString("PayPalEnvironmentProduction");
-        this.sandboxClientId = jObject.getString("PayPalEnvironmentSandbox");
         this.callbackContext.success();
     }
 
@@ -62,7 +61,6 @@ public class PayPalMobileCordovaPlugin extends CordovaPlugin {
         if (requestCode == 1) {
             switch (resultCode) {
                 case CredopayPaymentConstants.TRANSACTION_COMPLETED:
-                    CLog.loge("TRANSACTION_COMPLETED");
                     Bundle bundle = data.getExtras();
                     for (String key : bundle.keySet()) {
                         System.out.println((key + " Key | " + bundle.get(key).toString())); //To Implement
@@ -73,21 +71,21 @@ public class PayPalMobileCordovaPlugin extends CordovaPlugin {
                     if (data != null) {
                         String error = data.getStringExtra("error");
                         if (error != null) {
-                            Toast.makeText(this, error,
+                            Toast.makeText(activity, error,
                                     Toast.LENGTH_LONG).show();
                         }
                     }
-                    this.callbackContext.error();
+                    this.callbackContext.error("TRANSACTION_CANCELLED");
                     break;
                 case CredopayPaymentConstants.LOGIN_FAILED:
                     if (data != null) {
                         String error = data.getStringExtra("error");
                         if (error != null) {
-                            Toast.makeText(this, error,
+                            Toast.makeText(activity, error,
                                     Toast.LENGTH_LONG).show();
                         }
                     }
-                    this.callbackContext.error();
+                    this.callbackContext.error("LOGIN_FAILED");
                     break;
                 case CredopayPaymentConstants.CHANGE_PASSWORD:
                     //no data will come from sdk, dont read data from intent
@@ -103,11 +101,11 @@ public class PayPalMobileCordovaPlugin extends CordovaPlugin {
                     if (data != null) {
                         String error = data.getStringExtra("error");
                         if (error != null) {
-                            Toast.makeText(this, error,
+                            Toast.makeText(activity, error,
                                     Toast.LENGTH_LONG).show();
                         }
                     }
-                    this.callbackContext.error();
+                    this.callbackContext.error("CHANGE_PASSWORD_FAILED");
                     break;
                 default:
                     break;
@@ -133,8 +131,8 @@ public class PayPalMobileCordovaPlugin extends CordovaPlugin {
             intent.putExtra("LOGIN_PASSWORD", "Aug@2022");
         else
             intent.putExtra("LOGIN_PASSWORD", "Aug@2022");
-        intent.putExtra("LOGO", Utils.getVariableImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo)));
+        intent.putExtra("LOGO", Utils.getVariableImage(ContextCompat.getDrawable(activity.getApplicationContext(), R.drawable.logo)));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivityForResult(intent, 1);
+        activity.startActivityForResult(intent, 1);
     }
 }
